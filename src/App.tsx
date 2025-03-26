@@ -2,11 +2,32 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Palette, Briefcase, Mail, Code, PenTool, Layout, ArrowRight, Star, Users, Coffee } from 'lucide-react';
+import { 
+  Palette, 
+  Briefcase, 
+  Mail, 
+  Code, 
+  PenTool, 
+  Layout, 
+  ArrowRight, 
+  Star, 
+  Users, 
+  Coffee, 
+  Award, 
+  MapPin,
+  Quote
+} from 'lucide-react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { ContactForm } from '@/components/ContactForm';
 import { Toaster } from '@/components/ui/toaster';
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 function App() {
   const [ref, inView] = useInView({
@@ -71,6 +92,37 @@ function App() {
     { icon: <Users className="w-8 h-8" />, value: "200+", label: "Happy Clients" },
     { icon: <Coffee className="w-8 h-8" />, value: "500+", label: "Projects Done" },
     { icon: <Award className="w-8 h-8" />, value: "15+", label: "Design Awards" },
+  ];
+
+  const testimonials = [
+    {
+      content: "The team's innovative approach to design and attention to detail transformed our brand identity. Their work exceeded our expectations and helped us stand out in a competitive market.",
+      author: "Sarah Johnson",
+      position: "CEO",
+      company: "TechVision Inc.",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=250"
+    },
+    {
+      content: "Working with this design agency was a game-changer for our digital presence. Their understanding of UX/UI principles and creative solutions delivered remarkable results.",
+      author: "Michael Chen",
+      position: "Product Director",
+      company: "InnovateLabs",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=250"
+    },
+    {
+      content: "The level of professionalism and creativity they brought to our project was outstanding. They didn't just meet our requirements; they elevated our entire brand vision.",
+      author: "Emily Rodriguez",
+      position: "Marketing Head",
+      company: "Global Brands",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=250"
+    },
+    {
+      content: "Their strategic approach to design and branding helped us achieve a 200% increase in user engagement. A truly exceptional team that delivers results.",
+      author: "David Park",
+      position: "Founder",
+      company: "NextGen Solutions",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=250"
+    }
   ];
 
   return (
@@ -227,10 +279,10 @@ function App() {
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-100"
                     />
                     <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <Button variant="outline" className="text-white border-white hover:bg-white/20">
+                      <Button variant="outline" className=" border-white hover:bg-white/20">
                         View Project
                       </Button>
                     </div>
@@ -244,6 +296,61 @@ function App() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={fadeIn}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">Client Success Stories</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Hear from industry leaders who have transformed their businesses through our design solutions.
+            </p>
+          </motion.div>
+          
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <Card className="p-6">
+                    <div className="mb-6">
+                      <Quote className="w-10 h-10 text-primary/20" />
+                    </div>
+                    <p className="text-lg mb-6 text-muted-foreground">"{testimonial.content}"</p>
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.author}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                      <div>
+                        <h4 className="font-semibold">{testimonial.author}</h4>
+                        <p className="text-sm text-muted-foreground">
+                          {testimonial.position} at {testimonial.company}
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-8 gap-2">
+              <CarouselPrevious />
+              <CarouselNext />
+            </div>
+          </Carousel>
         </div>
       </section>
 
